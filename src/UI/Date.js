@@ -15,8 +15,9 @@ const Date = (props) => {
       <div className="">{day}</div>
       <div className="">{month}</div>
       <div className="">{year}</div>
-      <div className="">{hour}</div>
-      <div className="">{minutes}</div>
+      <div className="">
+        {hour}:{minutes}
+      </div>
     </div>
   );
 };

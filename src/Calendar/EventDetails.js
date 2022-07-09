@@ -10,7 +10,7 @@ import Date from "../UI/Date";
 const DetailOverlay = (props) => {
   let bg_status = "p-4 bg-gray-400";
   if (props.status == "completed") bg_status = "p-4 bg-green-500";
-  if (props.status == "cancelled") bg_status = "p-4 bg-red-500";
+  if (props.status == "canceled") bg_status = "p-4 bg-red-500";
   return (
     <Card className={classes.modal}>
       <header className={bg_status}>
@@ -39,9 +39,6 @@ const DetailOverlay = (props) => {
           <span>&#36; {props.price}</span>
         </div>
       </div>
-      <footer className={classes.actions}>
-        <Button type="submit">Okay</Button>
-      </footer>
     </Card>
   );
 };
@@ -56,12 +53,12 @@ const EventDetails = (props) => {
       )}
       {ReactDOM.createPortal(
         <DetailOverlay
-          date={props.informacion.instancia.range.end}
-          title={props.informacion.data.title}
-          status={props.informacion.data.extendedProps.status}
-          provider={props.informacion.data.extendedProps.provider}
-          client={props.informacion.data.extendedProps.client}
-          price={props.informacion.data.extendedProps.price}
+          date={props.eventdata.start}
+          title={props.eventdata.title}
+          status={props.eventdata.status}
+          provider={props.eventdata.provider}
+          client={props.eventdata.client}
+          price={props.eventdata.price}
           onConfirm={props.onConfirm}
         />,
         document.getElementById("overlay-root")

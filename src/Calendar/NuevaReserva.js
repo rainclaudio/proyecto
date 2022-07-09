@@ -50,14 +50,14 @@ const ModalOverlay = (props) => {
   const submitHandler = (event) => {
     // Aquí subimos la información que se genera al crear un nuevo evento
     event.preventDefault();
-
+    console.log("por que vergas me activo");
     props.onConfirm({
       title: service,
       provider: provider,
       price: 5000,
-      start: date_start,
-      end: date_end,
-      status: "Pendiente",
+      start: enteredDate,
+      end: "2022-07-06T15:00:00",
+      status: "pendiente",
       client: {
         name: client,
         email: "client@example.com",
@@ -129,7 +129,7 @@ const NuevaReservaModal = (props) => {
   return (
     <React.Fragment>
       {ReactDOM.createPortal(
-        <Backdrop onConfirm={props.onConfirm} />,
+        <Backdrop onConfirm={props.onExit} />,
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(

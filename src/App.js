@@ -4,6 +4,7 @@ import Calendar from "./Calendar/Calendar";
 import React, { useState } from "react";
 import NuevaReservaModal from "./Calendar/NuevaReserva";
 import EventDetails from "./Calendar/EventDetails";
+import RightToolbar from "./RightToolbar/RightToolbar";
 
 const DUMMY_USERS = {
   clients: [
@@ -60,9 +61,70 @@ const DUMMY_SERVICES = [
     price: 18000,
   },
 ];
-
+const DUMMY_RESERVATIONS = [
+  {
+    id: 1,
+    title: "Manicure 1",
+    provider: "Marcos Villarroel",
+    price: 5000,
+    start: "2022-07-06T14:00:00",
+    end: "2022-07-06T15:00:00",
+    status: "canceled",
+    client: {
+      name: "Almendra castillo",
+      email: "client@example.com",
+      city: "Concepción",
+      imageURL: "almendra.jpg",
+    },
+  },
+  {
+    id: 2,
+    title: "Pedicure 2",
+    provider: "Marcos Villarroel",
+    price: 7000,
+    start: "2022-07-10T14:00:00",
+    end: "2022-07-10T15:00:00",
+    status: "completed",
+    client: {
+      name: "Almendra castillo",
+      email: "client@example.com",
+      city: "Concepción",
+      imageURL: "almendra.jpg",
+    },
+  },
+  {
+    id: 3,
+    title: "Botox Capilar 3",
+    provider: "Marcos Villarroel",
+    price: 17000,
+    start: "2022-07-12T14:00:00",
+    end: "2022-07-12T15:00:00",
+    status: "completed",
+    client: {
+      name: "Almendra castillo",
+      email: "client@example.com",
+      city: "Concepción",
+      imageURL: "almendra.jpg",
+    },
+  },
+  {
+    id: 4,
+    title: "Botox Capilar 4",
+    provider: "Marcos Villarroel",
+    price: 17000,
+    start: "2022-07-13T14:00:00",
+    end: "2022-07-13T15:00:00",
+    status: "completed",
+    client: {
+      name: "Almendra castillo",
+      email: "client@example.com",
+      city: "Concepción",
+      imageURL: "almendra.jpg",
+    },
+  },
+];
 function App() {
-  const [reservations, addReservation] = useState([]);
+  const [reservations, addReservation] = useState(DUMMY_RESERVATIONS);
   const [modal, setmodal] = useState(false);
   const [event_detail, setEventDetail] = useState(false);
   const [data, setData] = useState({});
@@ -72,8 +134,8 @@ function App() {
     setDate(reservation_date.date);
     setmodal(true);
   };
-  const watchEventHandler = (data, instancia) => {
-    setData({ data, instancia });
+  const watchEventHandler = (data) => {
+    setData(data);
     setEventDetail(true);
   };
   const eventHandler = () => {
@@ -85,6 +147,9 @@ function App() {
     addReservation((reservations) => {
       return [recivedData, ...reservations];
     });
+    setmodal(null);
+  };
+  const exitHandler = () => {
     setmodal(null);
   };
 
@@ -100,11 +165,12 @@ function App() {
               date={date_str}
               message="hola mundo vamos a hacer una nueva reserva"
               onConfirm={modalHandler}
+              onExit={exitHandler}
             ></NuevaReservaModal>
           )}
           {event_detail && (
             <EventDetails
-              informacion={data}
+              eventdata={data}
               onConfirm={eventHandler}
             ></EventDetails>
           )}
@@ -114,7 +180,10 @@ function App() {
             onWatchEventDetail={watchEventHandler}
           ></Calendar>
         </div>
-        <div> Aquí va el perfil y las estadísticas</div>
+        <RightToolbar
+          onWatchEventDetail={watchEventHandler}
+          reservations={reservations}
+        ></RightToolbar>
         <div>Aquí irá el nav-bar</div>
       </div>
     </React.Fragment>
