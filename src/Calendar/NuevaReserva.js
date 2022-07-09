@@ -55,8 +55,8 @@ const ModalOverlay = (props) => {
       title: service,
       provider: provider,
       price: 5000,
-      start: enteredDate,
-      end: "2022-07-06T15:00:00",
+      start: date_start,
+      end: date_end,
       status: "pendiente",
       client: {
         name: client,
