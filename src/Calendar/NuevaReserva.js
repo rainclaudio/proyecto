@@ -21,9 +21,13 @@ const ModalOverlay = (props) => {
   const [client, setClient] = useState("client");
   const [clientIMG, setClientIMG] = useState(null);
 
-  const [enteredDate, setEnteredDate] = useState(props.date);
+  const [date_start, setEnteredDate] = useState(props.date);
+  const [date_end, setDateEnd] = useState(props.date);
   const handleDate = (date) => {
     setEnteredDate(date);
+  };
+  const handleDateEnd = (date) => {
+    setDateEnd(date);
   };
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -51,8 +55,8 @@ const ModalOverlay = (props) => {
       title: service,
       provider: provider,
       price: 5000,
-      start: enteredDate,
-      end: "2022-07-06T15:00:00",
+      start: date_start,
+      end: date_end,
       status: "Pendiente",
       client: {
         name: client,
@@ -79,17 +83,19 @@ const ModalOverlay = (props) => {
           onChange={handleChange}
           className="border col-span-2 border-slate-2 p-2"
         >
-          <option value="default" disabled hidden>
-            Seleccione un servicio
-          </option>
           <option value="Corte de pelo">Corte de pelo</option>
           <option value="Manicure">Manicure</option>
           <option value="Pedicure">Pedicure</option>
           <option value="Botox Capilar">Botox Capilar</option>
         </select>
 
-        <NewDate enteredDate={enteredDate} onChange={handleDate}></NewDate>
-        {/* <NewDate enteredDate={enteredDate} onChange={setEnteredDate}></NewDate> */}
+        <NewDate
+          date_start={date_start}
+          date_end={date_end}
+          onChange={handleDate}
+          onChangeDateEnd={handleDateEnd}
+        ></NewDate>
+        {/* <NewDate date_start={date_start} onChange={setEnteredDate}></NewDate> */}
 
         <label htmlFor="proveedor">Proveedor:</label>
         <div>

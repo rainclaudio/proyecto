@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DateTimePicker from "react-datetime-picker";
 
 const NewDate = (props) => {
-  console.log(props.enteredDate);
+  console.log(props.date_start, props.date_end);
   const getDate = function (date) {
     return date.split("T")[0];
   };
@@ -24,31 +24,46 @@ const NewDate = (props) => {
     return answer;
   };
 
-  const handleChange = (e, provenience) => {
-    let newdate = modify(props.enteredDate, e.target.value, provenience);
-    props.onChange(newdate);
+  const handleChange = (date, e, provenience, limit) => {
+    let newdate = modify(date, e.target.value, provenience);
+
+    if (limit === "start") props.onChange(newdate);
+    else props.onChangeDateEnd(newdate);
   };
 
   return (
     <React.Fragment>
       <label>Fecha: </label>
 
-      <div className="d-flex">
+      <div className="flex gap-3">
         <input
           type="date"
-          value={getDate(props.enteredDate)}
+          className="border"
+          value={getDate(props.date_start)}
           onChange={(event) => {
-            handleChange(event, "date");
+            handleChange(props.date_start, event, "date");
           }}
         />
         <input
-          id="appt-time"
+          id="appt-time-start"
           type="time"
+          className="border"
           onChange={(event) => {
-            handleChange(event, "time");
+            handleChange(props.date_start, event, "time", "start");
           }}
           name="appt-time"
-          value={getHour(props.enteredDate)}
+          value={getHour(props.date_start)}
+        ></input>
+        -
+        <input
+          className="border"
+          id="appt-time-end"
+          type="time"
+          onChange={(event) => {
+            handleChange(props.date_end, event, "time", "end");
+          }}
+          name="appt-time"
+          value={getHour(props.date_end)}
         ></input>
       </div>
     </React.Fragment>
